@@ -61,7 +61,11 @@ public class Main {
 
         JsonNode result = exercise.run(task);
 
-        aiRestClient.sendAnswer(result, token);
+        if( result == null ) {
+            log.info("Result is null");
+        } else {
+            aiRestClient.sendAnswer(result, token);
+        }
         return "main";
     }
 }

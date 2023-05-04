@@ -8,8 +8,11 @@ import org.springframework.web.client.RestTemplate;
 import pl.com.tq.common.ExerciseList;
 import pl.com.tq.exersices.AIExercise;
 import pl.com.tq.exersices.Ex_001_HelloApi;
+import pl.com.tq.exersices.Ex_003_Moderation;
 import pl.com.tq.services.AIRestClient;
+import pl.com.tq.services.OpenAI;
 import pl.com.tq.services.implementation.AIRestClientImpl;
+import pl.com.tq.services.implementation.OpenAIImpl;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -35,15 +38,19 @@ public class RestConfiguration {
     }
 
     @Bean
+    OpenAI getOpenAI() {
+        OpenAI openAI = new OpenAIImpl(getObjectMapper(), getRestTemplate());
+        return openAI;
+    }
+
+    @Bean
     ExerciseList getExercisesList() {
 
-        return new ExerciseList() {
-            @Override
-            public Map<String, AIExercise> getExercises() {
-                Map<String, AIExercise> result = new LinkedHashMap<>();
-                result.put("helloapi", new Ex_001_HelloApi(getObjectMapper()));
-                return result;
-            }
+        return () -> {
+            Map<String, AIExercise> result = new LinkedHashMap<>();
+            result.put("helloapi", new Ex_001_HelloApi(getObjectMapper()));
+            result.put("moderation", new Ex_003_Moderation(getObjectMapper(), getOpenAI()));
+            return result;
         };
     }
 }
