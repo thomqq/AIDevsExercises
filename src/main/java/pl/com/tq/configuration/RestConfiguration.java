@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import pl.com.tq.common.ExerciseList;
 import pl.com.tq.exersices.AIExercise;
 import pl.com.tq.exersices.Ex_001_HelloApi;
+import pl.com.tq.exersices.Ex_003_Inprompt;
 import pl.com.tq.exersices.Ex_003_Moderation;
 import pl.com.tq.services.AIRestClient;
 import pl.com.tq.services.OpenAI;
@@ -50,6 +51,8 @@ public class RestConfiguration {
             Map<String, AIExercise> result = new LinkedHashMap<>();
             result.put("helloapi", new Ex_001_HelloApi(getObjectMapper()));
             result.put("moderation", new Ex_003_Moderation(getObjectMapper(), getOpenAI()));
+            result.put("inprompt", new Ex_003_Inprompt(getObjectMapper(), getOpenAI()));
+
             return result;
         };
     }

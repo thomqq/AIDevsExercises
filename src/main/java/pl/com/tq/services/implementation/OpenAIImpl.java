@@ -50,4 +50,22 @@ public class OpenAIImpl implements OpenAI {
         log.info("moderation: result: " + response.toPrettyString());
         return response.get("results").get(0);
     }
+
+    @Override
+    public JsonNode completions(JsonNode body) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(apiKey);
+        HttpEntity<JsonNode> request = new HttpEntity<>(body, headers);
+
+        JsonNode response = restTemplate.postForObject(url + "v1/chat/completions", request, JsonNode.class);
+
+        if( response == null ) {
+            log.info("completions: null");
+            return null;
+        }
+        log.info("completions: response: " + response.toPrettyString());
+        //TODO - add specific
+        return response.get("choices").get(0);
+    }
 }
