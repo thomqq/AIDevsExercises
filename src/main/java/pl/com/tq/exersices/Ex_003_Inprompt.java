@@ -65,12 +65,14 @@ public class Ex_003_Inprompt implements AIExercise{
         items.add(user);
 
         Completions completions = Completions.builder()
-                .model("gpt-3.5-turbo")
+                .model("gpt-4")
                 .max_tokens(100)
                 .messages(items)
                 .build();
 
         JsonNode body = objectMapper.valueToTree(completions);
+
+        log.info("body: " + body.toPrettyString());
 
         JsonNode answer = openAI.completions(body);
         return answer;
