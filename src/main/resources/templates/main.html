@@ -6,20 +6,13 @@
 </head>
 <body>
 <form th:action="@{/action}" method="post">
+
     <table>
-        <tr>
+        <!--/*@thymesVar id="tasks" type="java.util.List<String>"*/-->
+        <tr th:each="task : ${tasks}">
             <td>
-                <button type="submit" name="task" value="helloapi">helloapi</button>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <button type="submit" name="task" value="moderation">moderation</button>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <button type="submit" name="task" value="inprompt">inprompt</button>
+                <!--/*@thymesVar id="task" type="java.lang.String"*/-->
+                <button type="submit" name="task" th:value="${task}" th:text="${task}"></button>
             </td>
         </tr>
     </table>

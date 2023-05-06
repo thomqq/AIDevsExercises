@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import pl.com.tq.common.ExerciseList;
 import pl.com.tq.exersices.AIExercise;
 import pl.com.tq.services.AIRestClient;
@@ -38,12 +39,15 @@ public class Main {
 
 
     @RequestMapping("/")
-    public String main() {
-        return "main";
+    public ModelAndView main() {
+        //add main to modelandview
+        ModelAndView modelAndView = new ModelAndView("main");
+        modelAndView.addObject("tasks", getTasksList());
+        return modelAndView;
     }
 
     @RequestMapping(value = "action", method = RequestMethod.POST)
-    public String performAction(@RequestParam Map<String,String> allRequestParams) {
+    public ModelAndView performAction(@RequestParam Map<String,String> allRequestParams) {
         String taskName = allRequestParams.get("task");
         if( taskName == null ) {
             throw new RuntimeException("No action");
@@ -66,6 +70,10 @@ public class Main {
         } else {
             aiRestClient.sendAnswer(result, token);
         }
-        return "main";
+
+        ModelAndView modelAndView = new ModelAndView("main");
+        modelAndView.addObject("tasks", getTasksList());
+
+        return modelAndView;
     }
 }
