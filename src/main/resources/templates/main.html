@@ -9,15 +9,17 @@
 
     <table>
         <!--/*@thymesVar id="tasks" type="java.util.List<String>"*/-->
-        <tr th:each="task : ${tasks}">
+        <tr th:each="task, stat : ${tasks}">
             <td>
                 <!--/*@thymesVar id="task" type="java.lang.String"*/-->
                 <button type="submit" name="task" th:value="${task}" th:text="${task}"></button>
                 <div th:if="${task == lastTaskName}">
-                    Task:<br>
+                    Task:
                     <pre th:text="${lastTask}"></pre>
-                    Result<br>
+                    Result:
                     <pre th:text="${lastResult}"></pre>
+                    Logs:
+                    <div th:each="log : ${logs}"><span th:text="${stat.index} + 1 + ' - ' + ${log}"/></div>
                 </div>
             </td>
         </tr>

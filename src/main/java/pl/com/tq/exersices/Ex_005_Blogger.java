@@ -11,6 +11,7 @@ import pl.com.tq.services.OpenAI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -26,7 +27,7 @@ public class Ex_005_Blogger implements AIExercise {
     }
 
     @Override
-    public JsonNode run(JsonNode input) {
+    public JsonNode run(JsonNode input, List<String> logs) {
         //get blog arraynode from input
         JsonNode blog = input.get("blog");
 

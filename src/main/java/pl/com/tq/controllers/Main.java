@@ -63,7 +63,8 @@ public class Main {
         JsonNode task = aiRestClient.getTask(token);
         log.info("task: " + task.toPrettyString());
 
-        JsonNode result = exercise.run(task);
+        List<String> logs = new ArrayList<>();
+        JsonNode result = exercise.run(task, logs);
 
         if( result == null ) {
             log.info("Result is null");
@@ -76,6 +77,7 @@ public class Main {
         modelAndView.addObject("lastTaskName", taskName);
         modelAndView.addObject("lastTask", task.toPrettyString());
         modelAndView.addObject("lastResult", result == null ? "null" : result.toPrettyString());
+        modelAndView.addObject("logs", logs);
 
         return modelAndView;
     }

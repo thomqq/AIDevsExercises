@@ -22,7 +22,7 @@ public class Ex_003_Moderation implements AIExercise{
     }
 
     @Override
-    public JsonNode run(JsonNode input) {
+    public JsonNode run(JsonNode input, List<String> logs) {
         List<Integer> output = new ArrayList<>();
         ArrayNode arrInput = (ArrayNode) input.get("input");
         arrInput.forEach(item -> {

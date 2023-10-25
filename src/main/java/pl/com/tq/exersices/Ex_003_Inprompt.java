@@ -24,7 +24,7 @@ public class Ex_003_Inprompt implements AIExercise{
     }
 
     @Override
-    public JsonNode run(JsonNode input) {
+    public JsonNode run(JsonNode input, List<String> logs) {
 
         List<String> facts = new ArrayList<>();
         String question = input.get("question").asText();
