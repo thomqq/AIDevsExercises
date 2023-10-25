@@ -13,6 +13,12 @@
             <td>
                 <!--/*@thymesVar id="task" type="java.lang.String"*/-->
                 <button type="submit" name="task" th:value="${task}" th:text="${task}"></button>
+                <div th:if="${task == lastTaskName}">
+                    Task:<br>
+                    <pre th:text="${lastTask}"></pre>
+                    Result<br>
+                    <pre th:text="${lastResult}"></pre>
+                </div>
             </td>
         </tr>
     </table>

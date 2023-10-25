@@ -73,6 +73,9 @@ public class Main {
 
         ModelAndView modelAndView = new ModelAndView("main");
         modelAndView.addObject("tasks", getTasksList());
+        modelAndView.addObject("lastTaskName", taskName);
+        modelAndView.addObject("lastTask", task.toPrettyString());
+        modelAndView.addObject("lastResult", result == null ? "null" : result.toPrettyString());
 
         return modelAndView;
     }
