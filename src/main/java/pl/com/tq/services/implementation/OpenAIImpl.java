@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.com.tq.services.OpenAI;
 
+import java.nio.charset.Charset;
+import java.util.Arrays;
+
 @Slf4j
 @Service
 public class OpenAIImpl implements OpenAI {
@@ -36,6 +39,9 @@ public class OpenAIImpl implements OpenAI {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(apiKey);
+        //add content code Utf-8
+        headers.setAcceptCharset(Arrays.asList(Charset.forName("UTF-8")));
+
 
         ObjectNode body = objectMapper.createObjectNode();
         body.put("input", text);
