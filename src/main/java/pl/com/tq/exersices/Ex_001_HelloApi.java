@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
-public class Ex_001_HelloApi implements AIExercise{
+public class Ex_001_HelloApi implements AIExercise<JsonNode>{
 
     private final ObjectMapper objectMapper;
 

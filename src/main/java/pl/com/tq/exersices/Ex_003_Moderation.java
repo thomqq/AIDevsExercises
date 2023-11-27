@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class Ex_003_Moderation implements AIExercise{
+public class Ex_003_Moderation implements AIExercise<JsonNode>{
 
     private final ObjectMapper objectMapper;
     private final OpenAI openAI;

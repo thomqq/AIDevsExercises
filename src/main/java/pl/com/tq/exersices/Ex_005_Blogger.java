@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class Ex_005_Blogger implements AIExercise {
+public class Ex_005_Blogger implements AIExercise<JsonNode> {
     //properties objectmapper and openai
     private ObjectMapper objectMapper;
     private OpenAI openAI;
@@ -30,6 +30,7 @@ public class Ex_005_Blogger implements AIExercise {
     public JsonNode run(JsonNode input, List<String> logs) {
         //get blog arraynode from input
         JsonNode blog = input.get("blog");
+        logs.add("blog: " + blog.toPrettyString());
 
         //prepare arraynode for blogs
         JsonNode blogs = objectMapper.createArrayNode();
@@ -58,6 +59,7 @@ public class Ex_005_Blogger implements AIExercise {
         ((ObjectNode) answer).put("answer", arrayNode);
         //add log using lombok
         log.info("answer: {}", answer.toPrettyString());
+        logs.add("answer: " + answer.toPrettyString());
         //return answer
         return answer;
     }
@@ -74,7 +76,7 @@ public class Ex_005_Blogger implements AIExercise {
                                         .build(),
                                 CompletionsItem.builder()
                                         .role("system")
-                                        .content("as cook prepare blod , return only one sentence with 20 tokens, add prompt at the beginning")
+                                        .content("as cook prepare blod , return only one sentence with 20 tokens, add prompt at the beginning, use Polish language model")
                                         .build()
                         )
                 )

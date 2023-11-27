@@ -33,7 +33,7 @@ public class Main {
 
     public List<String> getTasksList() {
         List<String> result = new ArrayList<>();
-        exercises.getExercises().forEach( (name, exercise) ->  result.add(name) );
+        exercises.getExercises().forEach((name, exercise) -> result.add(name));
         return result;
     }
 
@@ -47,14 +47,14 @@ public class Main {
     }
 
     @RequestMapping(value = "action", method = RequestMethod.POST)
-    public ModelAndView performAction(@RequestParam Map<String,String> allRequestParams) {
+    public ModelAndView performAction(@RequestParam Map<String, String> allRequestParams) {
         String taskName = allRequestParams.get("task");
-        if( taskName == null ) {
+        if (taskName == null) {
             throw new RuntimeException("No action");
         }
 
         AIExercise exercise = exercises.getExercises().get(taskName);
-        if( exercise == null ) {
+        if (exercise == null) {
             throw new RuntimeException("No exercise for task: " + taskName);
         }
 
@@ -63,20 +63,18 @@ public class Main {
         JsonNode task = aiRestClient.getTask(token);
         log.info("task: " + task.toPrettyString());
 
-        List<String> logs = new ArrayList<>();
-        JsonNode result = exercise.run(task, logs);
 
-        if( result == null ) {
-            log.info("Result is null");
-        } else {
-            aiRestClient.sendAnswer(result, token);
-        }
+        List<String> logs = new ArrayList<>();
+
+        Object result = exercise.run(task, logs);
+
+        aiRestClient.sendAnswer(exercise.run(task, logs), token);
 
         ModelAndView modelAndView = new ModelAndView("main");
         modelAndView.addObject("tasks", getTasksList());
         modelAndView.addObject("lastTaskName", taskName);
         modelAndView.addObject("lastTask", task.toPrettyString());
-        modelAndView.addObject("lastResult", result == null ? "null" : result.toPrettyString());
+        modelAndView.addObject("lastResult", result == null ? "null" :  result instanceof JsonNode ? ((JsonNode)result).toPrettyString() : result.toString());
         modelAndView.addObject("logs", logs);
 
         return modelAndView;

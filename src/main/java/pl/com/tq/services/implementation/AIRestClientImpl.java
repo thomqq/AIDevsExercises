@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.com.tq.services.AIRestClient;
 
@@ -58,5 +57,21 @@ public class AIRestClientImpl implements AIRestClient {
         HttpEntity<JsonNode> request = new HttpEntity<JsonNode>(result, headers);
 
         JsonNode response = restTemplate.postForObject(url + "answer/" + token, request, JsonNode.class);
+    }
+    @Override
+    public void sendAnswer(String result, String token) {
+        ObjectNode answer = objectMapper.createObjectNode().put("answer", result);
+        sendAnswer(answer, token);
+    }
+
+    @Override
+    public void sendAnswer(final Object run, final String token) {
+        if( run instanceof JsonNode) {
+            sendAnswer((JsonNode) run, token);
+        } else if (run instanceof String) {
+            sendAnswer((String) run, token);
+        } else {
+            throw new RuntimeException("Unknown type of run: " + run.getClass().getName());
+        }
     }
 }

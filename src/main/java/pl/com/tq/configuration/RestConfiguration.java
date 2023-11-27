@@ -50,8 +50,8 @@ public class RestConfiguration {
             result.put("moderation", new Ex_003_Moderation(getObjectMapper(), getOpenAI()));
             result.put("inprompt", new Ex_003_Inprompt(getObjectMapper(), getOpenAI()));
             result.put("blogger", new Ex_005_Blogger(getObjectMapper(), getOpenAI()));
-
-
+            result.put("embedding", new Ex_006_Embedding(getObjectMapper(), getOpenAI()));
+            result.put("whisper", new Ex_007_Whisper(getObjectMapper(), getOpenAI()));
             return result;
         };
     }
